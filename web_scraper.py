@@ -1,9 +1,11 @@
-from selenium import webdriver
+from bs4 import BeautifulSoup
+import requests
 
-# Set the path to the chromedriver
-driver= webdriver.Chrome()
-driver.get('https://www.cnn.com')
+url='https://www.cnn.com'
+response = requests.get(url)
+html = response.content
 
-# Get the title of the page
-title = driver.find_element(by='css selector', value='header')
-print(title.text)
+soup = BeautifulSoup(html, 'html.parser')
+titles = soup.find_all('h2')
+for title in titles:
+    print(title)
